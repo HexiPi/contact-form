@@ -28,6 +28,8 @@ interface ContactFormProps {
     onSubmitCallback: (formData: ContactFormSubmissionData) => void,
     mainHeading: string,
     subHeading: string,
+    formSubmitOKMsg: string,
+    formSubmitErrorMsg: string,
     formSubmitResult: FormRes,
     formSubmitResultReset: () => void
 };
@@ -42,6 +44,8 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         onSubmitCallback: (formData: ContactFormSubmissionData) => alert(JSON.stringify(formData)),
         mainHeading: "Need More Information?",
         subHeading: "Send Us a Message!",
+        formSubmitOKMsg: "Form Submitted!",
+        formSubmitErrorMsg: <span>An error has occurred (why???)! <span role="img" aria-label="sad face">😥</span> Please try again later.</span>,
         formSubmitResult: FormRes.NONE,
     };
 
@@ -97,39 +101,26 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
     displayForm = () => {
         if (this.props.formSubmitResult === FormRes.NONE) {
             return (
-                <div>
-                    <h2>{this.props.mainHeading}</h2>
-                    <h5>{this.props.subHeading}</h5>
-                    <div className="row">
-                        <Form className="column" style={{ flexGrow: 2 }} onSubmit={this.onSubmit} method={this.props.submitMethod}>
-                            <Input className="input large-input form-control" type="text" placeholder="Name*" name="client_name" value={this.state.client_name} onChange={this.handleInputChange} required />
-                            <div className="innerRow">
-                                <Input className="input inner-input form-control" type="email" placeholder="Email*" name="client_email" value={this.state.client_email} onChange={this.handleInputChange} required />
-                                <Input className="input inner-input form-control" type="tel" placeholder="Phone" name="client_phone" value={this.state.client_phone} onChange={this.handleInputChange} />
-                            </div>
-                            <textarea className="input large-input form-control" cols={40} rows={5} placeholder="Message*" name="client_message" value={this.state.client_message} onChange={this.handleInputChange} required />
-                            <br />
-                            <div className="innerRow">
-                                <Button className="contact-btn" type="submit">Send</Button>
-                                &nbsp;
-                                <Button className="contact-btn" type="reset" name="RESET_BTN" onClick={this.handleInputChange}>Clear</Button>
-                            </div>
-                        </Form>
-                        <div className="column" style={{ textAlign: 'center', flexGrow: 1 }}>
-                            <h5>More Contact Options</h5>
-                            <a href={`mailto:${this.props.email}`}><p className="infoLinks">EMAIL: {this.props.email}</p></a>
-                            {this.renderPhoneNumber(this.props.tel)}
-                            {(this.props.fax !== undefined) ? this.renderPhoneNumber(this.props.fax, true) : ""}
-                            {this.renderSocialIcons(this.props.socialMediaLinks)}
-                        </div>
+                <Form onSubmit={this.onSubmit} method={this.props.submitMethod}>
+                    <Input className="input large-input form-control" type="text" placeholder="Name*" name="client_name" value={this.state.client_name} onChange={this.handleInputChange} required />
+                    <div className="innerRow">
+                        <Input className="input inner-input form-control" type="email" placeholder="Email*" name="client_email" value={this.state.client_email} onChange={this.handleInputChange} required />
+                        <Input className="input inner-input form-control" type="tel" placeholder="Phone" name="client_phone" value={this.state.client_phone} onChange={this.handleInputChange} />
                     </div>
-                </div>
+                    <textarea className="input large-input form-control" cols={40} rows={5} placeholder="Message*" name="client_message" value={this.state.client_message} onChange={this.handleInputChange} required />
+                    <br />
+                    <div className="innerRow">
+                        <Button className="contact-btn" type="submit">Send</Button>
+                        &nbsp;
+                        <Button className="contact-btn" type="reset" name="RESET_BTN" onClick={this.handleInputChange}>Clear</Button>
+                    </div>
+                </Form>
             )
         }
         else if (this.props.formSubmitResult === FormRes.OK) {
             return(
                 <div className="status-container">
-                    Form Submitted!<br />
+                    {this.props.formSubmitOKMsg}<br />
                     <button className="btn btn-link" style={{color: 'deepskyblue'}} onClick={this.resetContactForm}>Click me to submit another one!</button>
                 </div>
             );
@@ -137,7 +128,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         else if (this.props.formSubmitResult === FormRes.ERROR) {
             return(
                 <div className="status-container">
-                    An error has occurred (why???)! <span role="img" aria-label="sad face">😥</span> Please try again later.<br />
+                    {this.props.formSubmitErrorMsg}<br />
                 </div>
             );
         }
@@ -185,8 +176,23 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
 
      render() {
         return (
-            <section id="contact-section">   
-                {this.displayForm()}
+            <section id="contact-section">
+                <div>
+                    <h2>{this.props.mainHeading}</h2>
+                    <h5>{this.props.subHeading}</h5>
+                    <div className="row">
+                        <div className="column" style={{ flexGrow: 2 }}>
+                            {this.displayForm()}
+                        </div>
+                        <div className="column" style={{ textAlign: 'center', flexGrow: 1 }}>
+                            <h5>More Contact Options</h5>
+                            <a href={`mailto:${this.props.email}`}><p className="infoLinks">EMAIL: {this.props.email}</p></a>
+                            {this.renderPhoneNumber(this.props.tel)}
+                            {(this.props.fax !== undefined) ? this.renderPhoneNumber(this.props.fax, true) : ""}
+                            {this.renderSocialIcons(this.props.socialMediaLinks)}
+                        </div>
+                    </div>
+                </div>
             </section>
          );
      }

@@ -23,7 +23,7 @@ class App extends React.Component {
         })
     };
 
-    //Set the state of the 'formSubmitResult' to the default so that
+    //Set the state of the "formSubmitResult" to the default so that
     //the form could be displayed again
     formSubmitResultReset = () => this.setState({ formSubmitResult: FormRes.NONE });
 
@@ -81,7 +81,7 @@ const App = () => {
         setFormSubmitResult(FormRes.OK);
     };
 
-    //Sets the state of the 'formSubmitResult' to the default so that
+    //Sets the state of the "formSubmitResult" to the default so that
     //the form could be displayed again
     const formSubmitResultReset = () => setFormSubmitResult(FormRes.NONE);
 
@@ -126,7 +126,7 @@ export default App;
 
 ````typescript
 interface ContactFormProps {
-    //The form submission method (either 'get' or 'post')
+    //The form submission method (either "get" or "post")
     submitMethod: 'get' | 'post',
 
     //The email address that would be displayed
@@ -147,19 +147,25 @@ interface ContactFormProps {
     //The optional custom subheading that would be displayed
     subHeading?: string,
 
+    //The optional custom "OK" message that would be displayed
+    formSubmitOKMsg?: string,
+
+    //The optional custom "ERROR" message that would be displayed
+    formSubmitErrorMsg?: string,
+
     //The result of the form submission (one of the options of the FormRes enum)
     formSubmitResult: FormRes,
 
     //The callback that is executed after the form is submitted
-    //The 'formData' parameter holds the data that was submitted on the form
-    //of the type 'ContactFormSubmissionData'
+    //The "formData" parameter holds the data that was submitted on the form
+    //of the type "ContactFormSubmissionData"
     onSubmitCallback: (formData: ContactFormSubmissionData) => void,
 
     //The callback that is executed after the form is reset
     formSubmitResultReset: () => void
 };
 ````
-#### <u>Note:</u> Most attributes are technically optional since they already have default values assigned to them. However the ones that are actually optional (marked with a '?') will not be shown or used by default (with the exception of the default headings). __All callback functions are required if you actually want the form to work properly.__
+#### <u>Note:</u> Most attributes are technically optional since they already have default values assigned to them. However the ones that are actually optional (marked with a "?") will not be shown or used by default (with the exception of the default headings). __All callback functions are required if you actually want the form to work properly.__
 <br>
 
 ### Below are the __default values__:
@@ -181,6 +187,8 @@ static defaultProps = {
         (formData: ContactFormSubmissionData) => alert(JSON.stringify(formData)),
     mainHeading: "Need More Information?",
     subHeading: "Send Us a Message!",
+    formSubmitOKMsg: "Form Submitted!",
+    formSubmitErrorMsg: "An error has occurred (why???)! 😥 Please try again later."
     formSubmitResult: FormRes.NONE,
 };
 ````
@@ -208,8 +216,13 @@ enum FormRes {
 ````typescript
 interface ContactFormSubmissionData {
     name: string,
+
     email: string,
-    phone_number?: string, //Optional and may have a value of 'undefined'
+
+    //Not a required form field for user;
+    //if not specified it will return an empty string
+    phone_number?: string,
+    
     message: string
 }
 ````

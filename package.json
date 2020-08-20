@@ -1,6 +1,6 @@
 {
-  "name": "contact-form-component-hexipi",
-  "version": "0.1.1",
+  "name": "contact-form-hexipi",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@types/react-dom": "^16.9.8",
@@ -37,6 +37,6 @@
     ]
   },
   "description": "This is a React.JS contact form module.",
-  "author": "Jose A. Alvarado",
+  "author": "Jose A. Alvarado & Rafael Franco-Vera",
   "license": "MIT"
 }
