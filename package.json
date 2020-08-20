@@ -1,6 +1,6 @@
 {
   "name": "contact-form-component-hexipi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@types/react-dom": "^16.9.8",
