@@ -1,14 +1,19 @@
 {
-  "name": "contact-form",
+  "name": "contact-form-component-hexipi",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@types/react-dom": "^16.9.8",
+    "@types/reactstrap": "^8.5.0",
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.1",
+    "reactstrap": "^8.4.1",
+    "typescript": "^3.9.7",
+    "libphonenumber-js": "^1.7.56",
+    "react-social-icons": "^4.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This is a React.JS contact form module.",
+  "author": "Jose A. Alvarado",
+  "license": "MIT"
 }

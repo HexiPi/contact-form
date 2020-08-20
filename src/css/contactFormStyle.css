@@ -1,0 +1,113 @@
+#contact-section {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+    margin-bottom: 100px;
+    border-radius: 0;
+    padding: 5rem 2rem;
+}
+
+#contact-section .row {  
+    width: 100%;
+    flex-flow: wrap row;
+    -ms-box-orient: horizontal;
+    justify-content: space-evenly;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+#contact-section h2 {
+    font-size: 3rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#contact-section h5 {
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#contact-section .innerRow {
+    width: 100%;
+    flex-flow: wrap row;
+    -ms-box-orient: horizontal;
+    justify-content: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+#contact-section .column {
+    padding: 30px 0;
+    /* border: red dashed 2px; */
+}
+
+.input {
+    background-color: #ffffff00;
+    color: #ffffff;
+    width: 100%;
+}
+
+.large-input {
+    width: 100%;
+}
+
+.inner-input {
+    width: 50%;
+}
+
+.infoLinks {
+    color: #ffffff;
+    font-size: 1.3rem;
+}
+
+#contact-section ul {
+    list-style: none;
+    padding-left: 0;
+    /* margin-left: 40px; */
+    /* padding-top: 40px; */
+}
+
+#contact-section li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.contact-btn {
+    margin-top: 10px;
+    padding: 10px 35px;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    background-color: #46bace00;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 960px) {
+    #contact-section {
+        width: 100%;
+    }
+
+    .inner-input {
+        width: 100%;
+    }
+
+    #contact-section .innerRow {
+        flex-flow: wrap column;
+    }
+}
