@@ -5,7 +5,7 @@
 ````javascript
 //As a Class Component
 import React from 'react';
-import ContactForm, { FormRes } from './components/ContactForm';
+import ContactForm, { FormRes } from 'contact-form-hexipi';
 import './App.css';
 
 class App extends React.Component {
@@ -67,7 +67,7 @@ export default App;
 ````javascript
 //As a Funcational Component Using Hooks
 import React, { useState } from 'react';
-import ContactForm, { FormRes } from './components/ContactForm';
+import ContactForm, { FormRes } from 'contact-form-hexipi';
 import './App.css';
 
 const App = () => {
