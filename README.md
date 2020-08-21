@@ -1,5 +1,15 @@
 # Contact Form React.JS Component by _#HexiPi_
 
+## __<u>Installation:</u>__
+
+````
+npm install contact-form-hexipi --save
+
+OR
+
+yarn add contact-form-hexipi
+````
+
 ## __<u>Example of Usage:</u>__
 
 ````javascript
