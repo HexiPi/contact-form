@@ -1,6 +1,6 @@
 {
   "name": "contact-form-hexipi",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "./lib/ContactForm.js",
   "types": "./lib/ContactForm.d.ts",
   "dependencies": {
