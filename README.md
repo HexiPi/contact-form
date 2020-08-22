@@ -129,6 +129,24 @@ const App = () => {
 export default App;
 ````
 
+### Below is an example of how you can customize your form using CSS:
+<br>
+
+````css
+/* App.css */
+
+...
+
+/* Use the following CSS selector */
+#contact-section {
+  background-image: linear-gradient(#270941ec, rgba(0, 0, 0, 0.555)), 
+    url(~./images/custom-img.jpg);
+
+  /* Other customizations you want */
+  ...
+}
+````
+
 ## __<u>Attributes & Data Types:</u>__
 
 ### Below is a list of all the available __attributes__:
@@ -220,7 +238,7 @@ enum FormRes {
 }
 ````
 
-### Below are all the available values of the __ContactFormSubmissionData__:
+### Below are all the available values of the __ContactFormSubmissionData__ interface:
 <br>
 
 ````typescript

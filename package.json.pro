@@ -1,6 +1,6 @@
 {
   "name": "contact-form-hexipi",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "./lib/ContactForm.js",
   "types": "./lib/ContactForm.d.ts",
   "dependencies": {
@@ -64,6 +64,7 @@
     "lib/**/*"
   ],
   "description": "This is a React.JS contact form module.",
-  "author": "Jose A. Alvarado & Rafael Franco-Vera",
+  "contributors": [{ "name": "Jose A. Alvarado", "email": "j.alvarado@hexipi.com" }, { "name": "Rafael Franco-Vera", "email": "r.franco@hexipi.com" }],
+  "keywords": ["contact form", "contact", "form", "react", "react.js", "ui", "hexipi"],
   "license": "MIT"
 }
