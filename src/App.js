@@ -11,7 +11,7 @@ class App extends React.Component {
         alert(`Form Data: ${JSON.stringify(formData)}`);
         this.setState({
             formSubmitResult: FormRes.OK,
-        })
+        });
     };
 
     formSubmitResultReset = () => this.setState({ formSubmitResult: FormRes.NONE });
@@ -28,6 +28,7 @@ class App extends React.Component {
                         onSubmitCallback={this.onSubmit}
                         formSubmitResult={this.state.formSubmitResult}
                         formSubmitResultReset={this.formSubmitResultReset} 
+                        backgroundColor="#270941ec"
                     />
                 </header>
             </div>

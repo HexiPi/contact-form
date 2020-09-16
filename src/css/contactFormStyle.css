@@ -4,7 +4,6 @@
     margin-right: auto;
     background-repeat: no-repeat;
     background-size: cover;
-    color: #ffffff;
     margin-bottom: 100px;
     border-radius: 0;
     padding: 5rem 2rem;
@@ -54,22 +53,19 @@
     /* border: red dashed 2px; */
 }
 
-.input {
-    background-color: #ffffff00;
-    color: #ffffff;
+#contact-section .input {
     width: 100%;
 }
 
-.large-input {
+#contact-section .large-input {
     width: 100%;
 }
 
-.inner-input {
+#contact-section .inner-input {
     width: 50%;
 }
 
-.infoLinks {
-    color: #ffffff;
+#contact-section .infoLinks {
     font-size: 1.3rem;
 }
 
@@ -85,15 +81,13 @@
     margin-right: 10px;
 }
 
-.contact-btn {
+#contact-section .contact-btn {
     margin-top: 10px;
     padding: 10px 35px;
     border-radius: 25px;
     border-style: solid;
     border-width: 2px;
-    border-color: #ffffff;
     background-color: #46bace00;
-    color: #ffffff;
     font-size: 18px;
     font-weight: 700;
 }
@@ -103,7 +97,7 @@
         width: 100%;
     }
 
-    .inner-input {
+    #contact-section .inner-input {
         width: 100%;
     }
 

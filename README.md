@@ -1,4 +1,4 @@
-# Contact Form React.JS Component by _#HexiPi_
+# __Contact Form React.JS Component by _#HexiPi___
 
 ## __<u>Installation:</u>__
 
@@ -44,7 +44,12 @@ class App extends React.Component {
                     <ContactForm
                         submitMethod="post"
                         email="info@example.com"
+
+                    //(EITHER OR, BUT NOT BOTH!)
                         tel="+18005555555"
+                    //OR
+                        telWithCountryCode={["8005555555", "US"]}
+
                         socialMediaLinks={[
                             //Facebook link
                             "https://www.facebook.com/HexiPi.Web.Dev",
@@ -62,7 +67,8 @@ class App extends React.Component {
                         ]}
                         onSubmitCallback={this.onSubmit}
                         formSubmitResult={this.state.formSubmitResult}
-                        formSubmitResultReset={this.formSubmitResultReset} 
+                        formSubmitResultReset={this.formSubmitResultReset}
+                        backgroundColor="#270941ec"
                     />
                 </header>
             </div>
@@ -75,7 +81,7 @@ export default App;
 <br>
 
 ````javascript
-//As a Funcational Component Using Hooks
+//As a Functional Component Using Hooks
 import React, { useState } from 'react';
 import ContactForm, { FormRes } from 'contact-form-hexipi';
 import './App.css';
@@ -101,7 +107,12 @@ const App = () => {
                     <ContactForm
                         submitMethod="post"
                         email="info@example.com"
+
+                    //(EITHER OR, BUT NOT BOTH!)
                         tel="+18005555555"
+                    //OR
+                        telWithCountryCode={["8005555555", "US"]}
+
                         socialMediaLinks={[
                             //Facebook link
                             "https://www.facebook.com/HexiPi.Web.Dev",
@@ -117,9 +128,10 @@ const App = () => {
 
                             //...Or anything you can think of!
                         ]}
-                        onSubmitCallback={this.onSubmit}
-                        formSubmitResult={this.state.formSubmitResult}
-                        formSubmitResultReset={this.formSubmitResultReset} 
+                        onSubmitCallback={onSubmit}
+                        formSubmitResult={formSubmitResult}
+                        formSubmitResultReset={formSubmitResultReset}
+                        backgroundColor="#270941ec"
                     />
                 </header>
             </div>
@@ -157,17 +169,27 @@ interface ContactFormProps {
     //The form submission method (either "get" or "post")
     submitMethod: 'get' | 'post',
 
-    //The email address that would be displayed
-    email: string,
+    //The optional email address that would be displayed
+    email?: string,
 
-    //The phone number that would be displayed
-    tel: string,
+    //The optional phone number that would be displayed
+    tel?: string,
+
+    //The optional phone number that would be displayed
+    //0th element should contain the phone number
+    //1st element should contain the country code
+    telWithCountryCode?: string[],
 
     //The optional fax number that would be displayed
     fax?: string,
 
-    //The array of social media links/web links that would be displayed
-    socialMediaLinks: string[],
+    //The optional fax number that would be displayed
+    //0th element should contain the fax number
+    //1st element should contain the country code
+    faxWithCountryCode?: string[],
+
+    //The optional array of social media links/web links that would be displayed
+    socialMediaLinks?: string[],
 
     //The optional custom main heading that would be displayed
     mainHeading?: string,
@@ -183,6 +205,14 @@ interface ContactFormProps {
 
     //The result of the form submission (one of the options of the FormRes enum)
     formSubmitResult: FormRes,
+
+    //The optional value of the background color of the page the ContactForm 
+    //component;
+    //This helps determine the appropriate font color that the ContactForm 
+    //component should use
+    //NOTE: This does not specify the ContactForm component's
+    //actual background color
+    backgroundColor?: string,
 
     //The callback that is executed after the form is submitted
     //The "formData" parameter holds the data that was submitted on the form
@@ -202,15 +232,12 @@ interface ContactFormProps {
 ````typescript
 static defaultProps = {
     submitMethod: "get",
-    email: "info@example.com",
-    tel: "+15555555555",
+    email: undefined,
+    tel: undefined,
+    telWithCountryCode: undefined,
     fax: undefined,
-    socialMediaLinks: [
-        "https://www.facebook.com/HexiPi.Web.Dev", 
-        "https://instagram.com/hexipi", 
-        "https://www.youtube.com/channel/UCxJUbbqJ_3hpaL53vn2EFVA", 
-        "https://hexipi.com/"
-    ],
+    faxWithCountryCode: undefined,
+    socialMediaLinks: undefined,
     onSubmitCallback: 
         (formData: ContactFormSubmissionData) => alert(JSON.stringify(formData)),
     mainHeading: "Need More Information?",
@@ -218,6 +245,7 @@ static defaultProps = {
     formSubmitOKMsg: "Form Submitted!",
     formSubmitErrorMsg: "An error has occurred (why???)! 😥 Please try again later."
     formSubmitResult: FormRes.NONE,
+    backgroundColor: 'black'
 };
 ````
 <br>
@@ -248,7 +276,7 @@ interface ContactFormSubmissionData {
     email: string,
 
     //Not a required form field for user;
-    //if not specified it will return an empty string
+    //if not specified it will return an empty string for the key
     phone_number?: string,
     
     message: string

@@ -1,9 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap';
 import * as React from 'react';
+import * as queryString from 'query-string';
 import { Input, Form, Button } from 'reactstrap';
 import { SocialIcon } from 'react-social-icons';
 import { parsePhoneNumberFromString, AsYouType } from 'libphonenumber-js';
+import { getContrastYIQ, convertRGBToHexColor } from 'color-functions-hexipi';
 import '../css/contactFormStyle.css';
 
 export enum FormRes {
@@ -23,7 +25,9 @@ interface ContactFormProps {
     submitMethod: 'get' | 'post',
     email: string,
     tel: string,
+    telWithCountryCode: string[],
     fax: string,
+    faxWithCountryCode: string[],
     socialMediaLinks: string[],
     onSubmitCallback: (formData: ContactFormSubmissionData) => void,
     mainHeading: string,
@@ -31,22 +35,26 @@ interface ContactFormProps {
     formSubmitOKMsg: string,
     formSubmitErrorMsg: string,
     formSubmitResult: FormRes,
+    backgroundColor: string,
     formSubmitResultReset: () => void
 };
 
 class ContactForm extends React.Component<ContactFormProps, {}> {
     static defaultProps = {
         submitMethod: "get",
-        email: "info@example.com",
-        tel: "+15555555555",
+        email: undefined,
+        tel: undefined,
+        telWithCountryCode: undefined,
         fax: undefined,
-        socialMediaLinks: ["https://www.facebook.com/HexiPi.Web.Dev", "https://instagram.com/hexipi", "https://www.youtube.com/channel/UCxJUbbqJ_3hpaL53vn2EFVA", "https://hexipi.com/"],
+        faxWithCountryCode: undefined,
+        socialMediaLinks: undefined,
         onSubmitCallback: (formData: ContactFormSubmissionData) => alert(JSON.stringify(formData)),
         mainHeading: "Need More Information?",
         subHeading: "Send Us a Message!",
         formSubmitOKMsg: "Form Submitted!",
         formSubmitErrorMsg: <span>An error has occurred (why???)! <span role="img" aria-label="sad face">😥</span> Please try again later.</span>,
         formSubmitResult: FormRes.NONE,
+        backgroundColor: 'black'
     };
 
     static defaultState = {
@@ -63,8 +71,28 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         client_message: '',
     };
 
-    renderPhoneNumber = (tel: string, isFax: boolean = false) => {
-        const phoneNumber = parsePhoneNumberFromString(tel);
+    componentDidMount = () => {
+        if (this.props.submitMethod.toLowerCase() === 'get') {
+            const query = queryString.parse(window.location.search);
+
+            if (Object.keys(query).length > 0 && query.client_name && query.client_email && query.client_phone && query.client_message) {
+
+                const formData: ContactFormSubmissionData = {
+                    name: query.client_name.toString(),
+                    email: query.client_email.toString(),
+                    phone_number: query.client_phone.toString(),
+                    message: query.client_message.toString()
+                }
+                
+                this.props.onSubmitCallback(formData);
+            }
+        }
+    }
+
+    textColor = convertRGBToHexColor(getContrastYIQ(this.props.backgroundColor));
+
+    renderPhoneNumber = (tel: string, isFax: boolean = false, countryCode: string = '') => {
+        const phoneNumber = parsePhoneNumberFromString(tel, countryCode);
         const numberURI = (isFax) ? phoneNumber.getURI().replace('tel', 'fax') : phoneNumber.getURI();
 
         return (
@@ -78,7 +106,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         <ul>
             {
                 socialMediaLinks.map((link: string, index: number) => (
-                    <li key={index}><SocialIcon bgColor="#ffffff" style={{ height: 50, width: 50 }} url={link} target="new_tab" /></li>
+                    <li key={index}><SocialIcon bgColor={this.textColor} style={{ height: 50, width: 50 }} url={link} target="new_tab" /></li>
                 ))
             }
         </ul>
@@ -93,7 +121,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         }
         else {
             this.setState({
-                [name]: (name === 'client_phone') ? new AsYouType('US').input(target.value) : target.value,
+                [name]: target.value,
             });
         }
     }
@@ -105,7 +133,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
                     <Input className="input large-input form-control" type="text" placeholder="Name*" name="client_name" value={this.state.client_name} onChange={this.handleInputChange} required />
                     <div className="innerRow">
                         <Input className="input inner-input form-control" type="email" placeholder="Email*" name="client_email" value={this.state.client_email} onChange={this.handleInputChange} required />
-                        <Input className="input inner-input form-control" type="tel" placeholder="Phone" name="client_phone" value={this.state.client_phone} onChange={this.handleInputChange} />
+                        <Input className="input inner-input form-control" type="tel" placeholder="Phone" name="client_phone" value={new AsYouType('US').input(this.state.client_phone)} onChange={this.handleInputChange} />
                     </div>
                     <textarea className="input large-input form-control" cols={40} rows={5} placeholder="Message*" name="client_message" value={this.state.client_message} onChange={this.handleInputChange} required />
                     <br />
@@ -121,7 +149,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
             return(
                 <div className="status-container">
                     {this.props.formSubmitOKMsg}<br />
-                    <button className="btn btn-link" style={{color: 'deepskyblue'}} onClick={this.resetContactForm}>Click me to submit another one!</button>
+                    <Button color="link" style={{color: 'deepskyblue'}} onClick={this.resetContactForm}>Click me to submit another one!</Button>
                 </div>
             );
         }
@@ -131,6 +159,23 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
                     {this.props.formSubmitErrorMsg}<br />
                 </div>
             );
+        }
+    }
+
+    renderMoreContactOptions = (shouldDisplay: boolean) => {
+        if (shouldDisplay) {
+            return (
+                <div className="column" style={{ textAlign: 'center', flexGrow: 1 }}>
+                    <h5>More Contact Options</h5>
+                    {(this.props.email !== undefined) ? <a href={`mailto:${this.props.email}`}><p className="infoLinks">EMAIL: {this.props.email}</p></a>: ""}
+                    {(this.props.tel !== undefined || this.props.telWithCountryCode !== undefined) ? this.renderPhoneNumber((this.props.tel !== undefined) ? this.props.tel : this.props.telWithCountryCode[0], false, (this.props.telWithCountryCode !== undefined) ? this.props.telWithCountryCode[1]: "") : ""}
+                    {(this.props.fax !== undefined || this.props.faxWithCountryCode !== undefined) ? this.renderPhoneNumber((this.props.fax !== undefined) ? this.props.fax : this.props.faxWithCountryCode[0], true, (this.props.faxWithCountryCode !== undefined) ? this.props.faxWithCountryCode[1]: "") : ""}
+                    {(this.props.socialMediaLinks !== undefined) ? this.renderSocialIcons(this.props.socialMediaLinks): ""}
+                </div>
+            );
+        }
+        else {
+            return "";
         }
     }
 
@@ -157,26 +202,33 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
     }
 
     onSubmit = (e: any) => {
-        const isPost = this.props.submitMethod.toLocaleLowerCase() === 'post';
-
-        const formData: ContactFormSubmissionData = {
-            name: this.state.client_name,
-            email: this.state.client_email,
-            phone_number: this.state.client_phone,
-            message: this.state.client_message
-        }
-
-        this.props.onSubmitCallback(formData);
+        const isPost = this.props.submitMethod.toLowerCase() === 'post';
         
         if (isPost) {
             e.preventDefault();
+
+            const formData: ContactFormSubmissionData = {
+                name: this.state.client_name,
+                email: this.state.client_email,
+                phone_number: this.state.client_phone,
+                message: this.state.client_message
+            }
+
+            this.props.onSubmitCallback(formData);
+
             this.setState(ContactForm.defaultState);
         }
     }
 
      render() {
         return (
-            <section id="contact-section">
+            <section id="contact-section" style={{ color: getContrastYIQ(this.props.backgroundColor) }}>
+                <style dangerouslySetInnerHTML={{__html: `
+                    #contact-section .input { background-color: #00000000; color: ${this.textColor}; border-color: ${this.textColor}; }
+                    #contact-section .contact-btn { color: ${this.textColor}; border-color: ${this.textColor}; }
+                    #contact-section .infoLinks { color: ${this.textColor}; }
+                `
+                }} />
                 <div>
                     <h2>{this.props.mainHeading}</h2>
                     <h5>{this.props.subHeading}</h5>
@@ -184,13 +236,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
                         <div className="column" style={{ flexGrow: 2 }}>
                             {this.displayForm()}
                         </div>
-                        <div className="column" style={{ textAlign: 'center', flexGrow: 1 }}>
-                            <h5>More Contact Options</h5>
-                            <a href={`mailto:${this.props.email}`}><p className="infoLinks">EMAIL: {this.props.email}</p></a>
-                            {this.renderPhoneNumber(this.props.tel)}
-                            {(this.props.fax !== undefined) ? this.renderPhoneNumber(this.props.fax, true) : ""}
-                            {this.renderSocialIcons(this.props.socialMediaLinks)}
-                        </div>
+                        {this.renderMoreContactOptions(this.props.email !== undefined || this.props.tel !== undefined || this.props.fax !== undefined || this.props.socialMediaLinks !== undefined || this.props.telWithCountryCode !== undefined || this.props.faxWithCountryCode !== undefined)}
                     </div>
                 </div>
             </section>
