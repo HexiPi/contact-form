@@ -50,7 +50,6 @@
 
 #contact-section .column {
     padding: 30px 0;
-    /* border: red dashed 2px; */
 }
 
 #contact-section .input {
@@ -72,8 +71,6 @@
 #contact-section ul {
     list-style: none;
     padding-left: 0;
-    /* margin-left: 40px; */
-    /* padding-top: 40px; */
 }
 
 #contact-section li {
@@ -90,6 +87,14 @@
     background-color: #46bace00;
     font-size: 18px;
     font-weight: 700;
+}
+
+#contact-section .contact-btn.send-btn:hover {
+    background-color: green;
+}
+
+#contact-section .contact-btn.clear-btn:hover {
+    background-color: red;
 }
 
 @media only screen and (max-width: 960px) {

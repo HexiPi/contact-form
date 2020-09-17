@@ -69,6 +69,9 @@ class App extends React.Component {
                         formSubmitResult={this.state.formSubmitResult}
                         formSubmitResultReset={this.formSubmitResultReset}
                         backgroundColor="#270941ec"
+                        autoFormatPhoneNumber={
+                            { shouldFormat: true, countryCode: 'US' }
+                        }
                     />
                 </header>
             </div>
@@ -132,6 +135,9 @@ const App = () => {
                         formSubmitResult={formSubmitResult}
                         formSubmitResultReset={formSubmitResultReset}
                         backgroundColor="#270941ec"
+                        autoFormatPhoneNumber={
+                            { shouldFormat: true, countryCode: 'US' }
+                        }
                     />
                 </header>
             </div>
@@ -149,15 +155,30 @@ export default App;
 
 ...
 
-/* Use the following CSS selector */
+/* Use the following CSS selector to customize the form container */
 #contact-section {
   background-image: linear-gradient(#270941ec, rgba(0, 0, 0, 0.555)), 
     url(~./images/custom-img.jpg);
+
+/* Use the following CSS selectors to customize the form buttons */
+#contact-section .contact-btn {
+    background-color: white;
+    color: black;
+    border-radius: 0;
+}
+
+#contact-section .contact-btn:hover {
+    background-color: yellow;
+    color: blue;
+}
 
   /* Other customizations you want */
   ...
 }
 ````
+
+For other CSS selectors and to see the default styles, go to the GitHub Repo [here](https://github.com/HexiPi/contact-form/blob/master/src/css/contactFormStyle.css).
+<br>
 
 ## __<u>Attributes & Data Types:</u>__
 
@@ -214,6 +235,11 @@ interface ContactFormProps {
     //actual background color
     backgroundColor?: string,
 
+    //The optional JSON object that tells the form to auto-format the "Phone"
+    //field as the user types in their phone number;
+    //The attribute takes a JSON object with the "PhoneNumberFormat" format;
+    autoFormatPhoneNumber?: boolean
+
     //The callback that is executed after the form is submitted
     //The "formData" parameter holds the data that was submitted on the form
     //of the type "ContactFormSubmissionData"
@@ -245,13 +271,28 @@ static defaultProps = {
     formSubmitOKMsg: "Form Submitted!",
     formSubmitErrorMsg: "An error has occurred (why???)! 😥 Please try again later."
     formSubmitResult: FormRes.NONE,
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    autoFormatPhoneNumber: { shouldFormat: true, countryCode: 'US' }
 };
 ````
 <br>
 
 ### Below are all the available values of the __FormRes__ Enumerator:
 <br>
+
+````typescript
+interface PhoneNumberFormat {
+    //Whether or not the "Phone" form field should be formatted;
+    //If "true" is specified, a countryCode MUST be provided
+    shouldFormat: boolean,
+
+    //The ISO 3166-1 alpha-2 two-letter country code the tells the
+    //ContactForm component how to format the phone number
+    //If "shouldFormat" is "true", a countryCode MUST be provided,
+    //otherwise it's not needed
+    countryCode?: string
+}
+````
 
 ````typescript
 enum FormRes {

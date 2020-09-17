@@ -29,6 +29,7 @@ class App extends React.Component {
                         formSubmitResult={this.state.formSubmitResult}
                         formSubmitResultReset={this.formSubmitResultReset} 
                         backgroundColor="#270941ec"
+                        autoFormatPhoneNumber={{ shouldFormat: true, countryCode: 'US' }}
                     />
                 </header>
             </div>

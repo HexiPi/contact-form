@@ -21,6 +21,11 @@ interface ContactFormSubmissionData {
     message: string
 }
 
+interface PhoneNumberFormat {
+    shouldFormat: boolean,
+    countryCode?: string
+}
+
 interface ContactFormProps {
     submitMethod: 'get' | 'post',
     email: string,
@@ -36,6 +41,7 @@ interface ContactFormProps {
     formSubmitErrorMsg: string,
     formSubmitResult: FormRes,
     backgroundColor: string,
+    autoFormatPhoneNumber: PhoneNumberFormat,
     formSubmitResultReset: () => void
 };
 
@@ -54,7 +60,8 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         formSubmitOKMsg: "Form Submitted!",
         formSubmitErrorMsg: <span>An error has occurred (why???)! <span role="img" aria-label="sad face">😥</span> Please try again later.</span>,
         formSubmitResult: FormRes.NONE,
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        autoFormatPhoneNumber: { shouldFormat: true, countryCode: 'US' }
     };
 
     static defaultState = {
@@ -133,14 +140,14 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
                     <Input className="input large-input form-control" type="text" placeholder="Name*" name="client_name" value={this.state.client_name} onChange={this.handleInputChange} required />
                     <div className="innerRow">
                         <Input className="input inner-input form-control" type="email" placeholder="Email*" name="client_email" value={this.state.client_email} onChange={this.handleInputChange} required />
-                        <Input className="input inner-input form-control" type="tel" placeholder="Phone" name="client_phone" value={new AsYouType('US').input(this.state.client_phone)} onChange={this.handleInputChange} />
+                        <Input className="input inner-input form-control" type="tel" placeholder="Phone" name="client_phone" value={(this.props.autoFormatPhoneNumber.shouldFormat) ? new AsYouType(this.props.autoFormatPhoneNumber.countryCode).input(this.state.client_phone) : this.state.client_phone} onChange={this.handleInputChange} />
                     </div>
                     <textarea className="input large-input form-control" cols={40} rows={5} placeholder="Message*" name="client_message" value={this.state.client_message} onChange={this.handleInputChange} required />
                     <br />
                     <div className="innerRow">
-                        <Button className="contact-btn" type="submit">Send</Button>
+                        <Button className="contact-btn send-btn" type="submit">Send</Button>
                         &nbsp;
-                        <Button className="contact-btn" type="reset" name="RESET_BTN" onClick={this.handleInputChange}>Clear</Button>
+                        <Button className="contact-btn clear-btn" type="reset" name="RESET_BTN" onClick={this.handleInputChange}>Clear</Button>
                     </div>
                 </Form>
             )
