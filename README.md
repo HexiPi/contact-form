@@ -109,6 +109,14 @@ const App = () => {
                 <header className="App-header">
                     <ContactForm
                         submitMethod="post"
+
+                        formData={{
+                            name: 'John Smith', 
+                            email: 'megaalpha200@gmail.com', 
+                            phone_number: '4095555555', 
+                            message: 'Testing 1,2,3...'
+                        }}
+
                         email="info@example.com"
 
                     //(EITHER OR, BUT NOT BOTH!)
@@ -190,6 +198,12 @@ interface ContactFormProps {
     //The form submission method (either "get" or "post")
     submitMethod: 'get' | 'post',
 
+    //The optional form data of the type "ContactFormSubmissionData" that can be
+    //passed in to populate the form
+    //NOTE: It is the responsibility of the dev to clear the data manually upon
+    //when the user submits the form
+    formData?: ContactFormSubmissionData,
+
     //The optional email address that would be displayed
     email?: string,
 
@@ -258,6 +272,7 @@ interface ContactFormProps {
 ````typescript
 static defaultProps = {
     submitMethod: "get",
+    formData: {},
     email: undefined,
     tel: undefined,
     telWithCountryCode: undefined,

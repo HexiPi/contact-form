@@ -41,3 +41,23 @@
   /* background-image: linear-gradient( #270941ec,rgba(0, 0, 0, 0.555)), url(~./images/fruitsalad.jpg); */
   background-image: linear-gradient( #270941ec,rgba(0, 0, 0, 0.555));
 }
+
+/* #contact-section .input {
+  background-color:#98774e;
+} */
+
+/* Firefox */
+/* #contact-section .input::placeholder {
+  color: red;
+  opacity: 1;
+} */
+
+/* Internet Explorer 10-11 */
+/* #contact-section .input:-ms-input-placeholder {
+  color: red;
+} */
+
+/* Microsoft Edge */
+/* #contact-section .input::-ms-input-placeholder { 
+  color: red;
+} */

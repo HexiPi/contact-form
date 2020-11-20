@@ -21,6 +21,7 @@ class App extends React.Component {
             <div className="App">
                 <header className="App-header">
                     <ContactForm
+                        formData={{name: 'John Smith', email: 'megaalpha200@gmail.com', phone_number: '4095555555', message: 'Testing 1,2,3...'}}
                         submitMethod="post"
                         email="info@example.com"
                         tel="+18005555555"

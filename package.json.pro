@@ -1,6 +1,6 @@
 {
   "name": "contact-form-hexipi",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "./lib/ContactForm.js",
   "types": "./lib/ContactForm.d.ts",
   "dependencies": {
@@ -40,7 +40,7 @@
     "ts-loader": "^8.0.3",
     "typescript": "^4.0.2",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.2.0"
   },
   "scripts": {
     "prebuild": "tsc",

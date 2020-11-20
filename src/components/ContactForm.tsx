@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap';
 import * as React from 'react';
 import * as queryString from 'query-string';
@@ -28,6 +28,7 @@ interface PhoneNumberFormat {
 
 interface ContactFormProps {
     submitMethod: 'get' | 'post',
+    formData: ContactFormSubmissionData,
     email: string,
     tel: string,
     telWithCountryCode: string[],
@@ -48,6 +49,7 @@ interface ContactFormProps {
 class ContactForm extends React.Component<ContactFormProps, {}> {
     static defaultProps = {
         submitMethod: "get",
+        formData: {},
         email: undefined,
         tel: undefined,
         telWithCountryCode: undefined,
@@ -92,6 +94,16 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
                 }
                 
                 this.props.onSubmitCallback(formData);
+            }
+        }
+        else if (this.props.submitMethod.toLowerCase() === 'post') {
+            if (Object.keys(this.props.formData).length > 0) {
+                this.setState({
+                    client_name: (this.props.formData.name) ? this.props.formData.name : '',
+                    client_email: (this.props.formData.email) ? this.props.formData.email : '',
+                    client_phone: (this.props.formData.phone_number) ? this.props.formData.phone_number : '',
+                    client_message: (this.props.formData.message) ? this.props.formData.message : '',
+                });
             }
         }
     }
@@ -204,6 +216,16 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
             else {
                 clearInterval(formShowInterval);
                 this.props.formSubmitResultReset();
+                if (this.props.submitMethod.toLowerCase() === 'post') {
+                    if (Object.keys(this.props.formData).length > 0) {
+                        this.setState({
+                            client_name: (this.props.formData.name) ? this.props.formData.name : '',
+                            client_email: (this.props.formData.email) ? this.props.formData.email : '',
+                            client_phone: (this.props.formData.phone_number) ? this.props.formData.phone_number : '',
+                            client_message: (this.props.formData.message) ? this.props.formData.message : '',
+                        });
+                    }
+                }
             }
         }, 1000);
     }
@@ -231,7 +253,7 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
         return (
             <section id="contact-section" style={{ color: getContrastYIQ(this.props.backgroundColor) }}>
                 <style dangerouslySetInnerHTML={{__html: `
-                    #contact-section .input { background-color: #00000000; color: ${this.textColor}; border-color: ${this.textColor}; }
+                    #contact-section .input { color: ${this.textColor}; border-color: ${this.textColor}; }
                     #contact-section .contact-btn { color: ${this.textColor}; border-color: ${this.textColor}; }
                     #contact-section .infoLinks { color: ${this.textColor}; }
                 `
