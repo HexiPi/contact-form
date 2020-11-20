@@ -216,15 +216,8 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
             else {
                 clearInterval(formShowInterval);
                 this.props.formSubmitResultReset();
-                if (this.props.submitMethod.toLowerCase() === 'post') {
-                    if (Object.keys(this.props.formData).length > 0) {
-                        this.setState({
-                            client_name: (this.props.formData.name) ? this.props.formData.name : '',
-                            client_email: (this.props.formData.email) ? this.props.formData.email : '',
-                            client_phone: (this.props.formData.phone_number) ? this.props.formData.phone_number : '',
-                            client_message: (this.props.formData.message) ? this.props.formData.message : '',
-                        });
-                    }
+                if (Object.keys(this.props.formData).length === 0) {
+                    this.setState(ContactForm.defaultState);
                 }
             }
         }, 1000);
@@ -244,8 +237,6 @@ class ContactForm extends React.Component<ContactFormProps, {}> {
             }
 
             this.props.onSubmitCallback(formData);
-
-            this.setState(ContactForm.defaultState);
         }
     }
 
