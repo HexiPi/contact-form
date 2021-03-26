@@ -1,27 +1,27 @@
 {
   "name": "contact-form-hexipi",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "./lib/ContactForm.js",
   "types": "./lib/ContactForm.d.ts",
   "dependencies": {
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^4.6.0",
     "color-functions-hexipi": "^0.1.7",
-    "jquery": "^3.5.1",
-    "libphonenumber-js": "^1.9.6",
+    "jquery": "^3.6.0",
+    "libphonenumber-js": "^1.9.14",
     "query-string": "^6.13.7",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-social-icons": "^4.1.0",
-    "reactstrap": "^8.7.1"
+    "reactstrap": "^8.9.0"
   },
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.13",
+    "@types/node": "^14.14.36",
     "@types/prop-types": "^15.7.3",
-    "@types/react-dom": "^17.0.0",
+    "@types/react-dom": "^17.0.3",
     "@types/reactstrap": "^8.7.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
@@ -32,15 +32,15 @@
     "file-loader": "^6.2.0",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "source-map-loader": "^1.1.3",
     "style-loader": "^1.2.1",
     "svg-url-loader": "^6.0.0",
     "ts-loader": "^8.0.12",
-    "typescript": "^4.1.3",
+    "typescript": "^4.2.3",
     "webpack": "^4.44.1",
-    "webpack-cli": "^4.2.0"
+    "webpack-cli": "^4.5.0"
   },
   "scripts": {
     "prebuild": "tsc",

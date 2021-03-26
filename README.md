@@ -2,12 +2,14 @@
 
 ## __<u>Installation:</u>__
 
+_Note: This module requires bootstrap for optimal CSS styling._ 
+
 ````
-npm install contact-form-hexipi --save
+npm install contact-form-hexipi bootstrap reactstrap --save
 
 OR
 
-yarn add contact-form-hexipi
+yarn add contact-form-hexipi bootstrap reactstrap
 ````
 
 ## __<u>Example of Usage:</u>__
@@ -16,6 +18,7 @@ yarn add contact-form-hexipi
 //As a Class Component
 import React from 'react';
 import ContactForm, { FormRes } from 'contact-form-hexipi';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 class App extends React.Component {
@@ -87,6 +90,7 @@ export default App;
 //As a Functional Component Using Hooks
 import React, { useState } from 'react';
 import ContactForm, { FormRes } from 'contact-form-hexipi';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 const App = () => {
@@ -112,7 +116,7 @@ const App = () => {
 
                         formData={{
                             name: 'John Smith', 
-                            email: 'megaalpha200@gmail.com', 
+                            email: 'test@gmail.com', 
                             phone_number: '4095555555', 
                             message: 'Testing 1,2,3...'
                         }}
